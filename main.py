@@ -6,6 +6,15 @@ while isInApp == true:
     userInput = input()
     if userInput == "help":
         print("exit = Shuts down the app")
+        print("random = Do some random things")
     elif userInput == "exit":
         isInApp = false
         print("Exiting app...")
+    elif userInput == "random":
+        print("What thing to you want to do random things with?\n1. art")
+        if userInput == art:
+            print("This will soon be art!")
+        else:
+            print("Invalid option! Please try the command again!")
+    else:
+        print("Invalid command!\nPlease type 'help' for a list of commands!")
