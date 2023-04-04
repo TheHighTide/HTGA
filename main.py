@@ -12,7 +12,7 @@ while isInApp == True:
         print("Exiting app...")
     elif userInput == "random":
         print("What thing to you want to do random things with?\n1. art")
-        if userInput == art:
+        if userInput == "art":
             print("This will soon be art!")
         else:
             print("Invalid option! Please try the command again!")
