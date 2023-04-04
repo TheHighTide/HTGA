@@ -1,3 +1,7 @@
+from draw import draw_square
+
+import random
+
 userInput = 'await'
 isInApp = True
 while isInApp == True:
@@ -14,7 +18,10 @@ while isInApp == True:
         print("What thing to you want to do random things with?\n1. art")
         userInput = input()
         if userInput == "art":
-            print("This will soon be art!")
+            with open("colors.txt", "r") as file:
+                allText = file.read()
+                words = list(map(str, allText.split()))
+                draw_square(random.choice(words))
         else:
             print("Invalid option! Please try the command again!")
     else:
