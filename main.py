@@ -1,6 +1,6 @@
 userInput = 'await'
-isInApp = true
-while isInApp == true:
+isInApp = True
+while isInApp == True:
     print("Welcome to HighTide's app! This is how you can check up on me!")
     print("What do you want to do?\nType 'help' for a list of options...")
     userInput = input()
