@@ -46,6 +46,17 @@ def draw_square(color):
         colorRender.pack()
         colorRender.create_rectangle(0, 0, 100, 100, fill="pink")
         window.mainloop()
+    elif color == "black":
+        window = Tk()
+        window.title("")
+        window.configure(width=100, height=100)
+        window.configure(bg='white')
+        window.resizable(False, False)
+        window.attributes('-toolwindow', True)
+        colorRender = Canvas(window, width=100, height=100)
+        colorRender.pack()
+        colorRender.create_rectangle(0, 0, 100, 100, fill="black")
+        window.mainloop()
     else:
         print("Wrong Color!")
 
