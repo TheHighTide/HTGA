@@ -3,3 +3,6 @@ blue
 green
 pink
 black
+orange
+yellow
+purple
