@@ -17,7 +17,7 @@ def have_fun(activity):
             words = list(map(str, allText.split()))
             randomNumber1 = random.choice(words)
             randomNumber2 = random.choice(words)
-            randomNumber3 = random.randint(0,0)
+            randomNumber3 = random.randint(1,20)
 
         window = Tk()
         henryfont = font.Font(size=randomNumber3)
