@@ -16,6 +16,17 @@ while isInApp:
         print("random = Do some random things")
     elif userInput == "exit":
         have_fun("exit")
+    elif userInput == "hello":
+        print("Hello how are you?\na = good\nb = bad\nc = so so")
+        userInput = input()
+        if userInput == 'a':
+            print("Well that is good!")
+        elif userInput == 'b':
+            print("Aww well I hope you feel better soon :)")
+        elif userInput == 'c':
+            print("Fair enough. Sometimes humans can be in the middle...")
+        else:
+            print("I don't know that response yet :( You have to try again...")
     elif userInput == "random":
         print("What thing to you want to do random things with?\n1. color\n2. word\n3. number")
         userInput = input()
