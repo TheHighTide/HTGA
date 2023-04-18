@@ -2,12 +2,19 @@ import random
 from random import randint
 from colorama import Fore
 from draw import *
+from hightide import test_owner
 from fun import have_fun
 
 userInput = 'await'
 isInApp = True
 
 print("Welcome to HighTide's app! This is how you can check up on me!")
+print("What do you want me to call you?")
+userName = input()
+if test_owner(userName) == True:
+    print("Welcome HighTide")
+else:
+    print("Welcome", userName)
 print("What do you want to do?\nType 'help' for a list of options...")
 while isInApp:
     userInput = input()
