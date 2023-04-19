@@ -1,4 +1,6 @@
-from tkinter import *
+import tkinter
+from tkinter import Tk
+from tkinter import Canvas
 
 
 def draw_square(color):
@@ -96,3 +98,29 @@ def draw_square(color):
 
 def activatecolor(color):
     draw_square(color)
+
+
+def display_schedule(day):
+    if day == 0:
+        window = Tk()
+        window.title("Schedule")
+        window.configure(width=100, height=100, bg="white")
+        window.resizable(False, False)
+        window.attributes("-toolwindow", True)
+        renderer = Canvas(window, width=100, height=100)
+        monday_text = tkinter.Label(renderer, text="     Monday:     \nNothing...", pady=10)
+        tuesday_text = tkinter.Label(renderer, text="     Tuesday:     \nNothing...", pady=10)
+        wednesday_text = tkinter.Label(renderer, text="     Wednesday:     \nNothing...", pady=10)
+        thursday_text = tkinter.Label(renderer, text="     Thursday     \nNothing...", pady=10)
+        friday_text = tkinter.Label(renderer, text="     Friday:     \nNothing...", pady=10)
+        saturday_text = tkinter.Label(renderer, text="     Saturday:     \nNothing...", pady=10)
+        sunday_text = tkinter.Label(renderer, text="     Sunday:     \nNothing...", pady=10)
+        monday_text.pack()
+        tuesday_text.pack()
+        wednesday_text.pack()
+        thursday_text.pack()
+        friday_text.pack()
+        saturday_text.pack()
+        sunday_text.pack()
+        renderer.pack()
+        window.mainloop()
