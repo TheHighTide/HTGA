@@ -1,12 +1,14 @@
 #pragma once
 
 #include <iostream>
-void DisplayMenu(int menuId) {
+void DisplayMenu(int menuId) { // std::cout << "1. \n";
     if (menuId == 0) {
-        std::cout << "-------------------Commands-------------------\n";
-        std::cout << "1. help       = Display a list of all commands\n";
-        std::cout << "2. quit/exit  = Exit the app\n";
-        std::cout << "----------------------------------------------\n";
+        std::cout << "--------------------Commands--------------------\n";
+        std::cout << "1. help         = Display a list of all commands\n";
+        std::cout << "2. osname       = Get the name of your OS\n";
+        std::cout << "3. jsplayground = Open the JS playground website\n";
+        std::cout << "4. quit/exit    = Exit the app\n";
+        std::cout << "------------------------------------------------\n";
     }
     if (menuId == 1) {
         bool currentLetter = false;
