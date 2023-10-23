@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "menus.h"
-#include "errors.h"
+#include "header/menus.h"
+#include "header/errors.h"
 
 using namespace std;
 
