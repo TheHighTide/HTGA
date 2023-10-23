@@ -7,7 +7,8 @@ This is HighTide's official app!
 ## Wiki
 This app has a new wiki! The wiki is where you can go to to find anything you need to know about anything in this app. This wiki has every command and it's usage in order to make the use of this app very easy!
 
-
+## Major Update
+Currently there is a goal of mine to learn c++ and or c. To start that goal easier, I will be writing **HTGA** in *c++* so that I can learn while making a helpful app. Due to this sudden switch, there will be another delay added to the count because of the time it is taking to finish the build script. I can't currently decide whether to do it in makefile or cmake. Please bare with me and check out the current c++ build in the project releases.
 
 ## Development
 Right now the program is being developed at a steady pace. Judging by the current pace, version 1.0 will release in about 1-2 months. Currently development is easier because of GitHub's **codespace** feature. What the codespace feature does is it creates a virtual machine in the browser or GitHub app that allows me to edit source code directly on GitHub. That feature alone helps me develop the app/program much much faster!
