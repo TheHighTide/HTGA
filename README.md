@@ -25,4 +25,6 @@ Some of the commands are:
 3. `exit`
 4. `quit`
 
+You can check out a more indepth command list [here in the wiki](https://github.com/TheHighTide/HTGA/wiki/Commands).
+
 Those are all the possible commands right now as the app isn't fully developed!
