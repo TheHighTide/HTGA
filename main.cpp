@@ -45,6 +45,11 @@ int main(int argc, char* argv[]) {
                 cout << "\033[1;31mJS Playground doesn't support your OS!\033[0m\n";
             }
         }
+        else if (userInput == "window") {
+            if (osName == "Windows32" || osName == "Windows64") {
+                system("resrouces/window.vbs")
+            }
+        }
         else if (userInput == "quit" || userInput == "exit") {
             cout << "Exiting the application...\n";
             break;
