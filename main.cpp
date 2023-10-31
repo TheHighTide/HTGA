@@ -45,6 +45,47 @@ int main(int argc, char* argv[]) {
                 cout << "\033[1;31mJS Playground doesn't support your OS!\033[0m\n";
             }
         }
+        else if (userInput == "pattern") { // The main code to display the patterns
+            while (true) {
+                cin >> userInput;
+                if (userInput == "1") {
+                    cout << "/\\/\\/\\/\\/\\/\\/\\/\\" << "\n";
+                    cout << "\\/\\/\\/\\/\\/\\/\\/\\/" << "\n";
+                    cout << "/\\/\\/\\/\\/\\/\\/\\/\\" << "\n";
+                    cout << "\\/\\/\\/\\/\\/\\/\\/\\/" << "\n";
+                    cout << "/\\/\\/\\/\\/\\/\\/\\/\\" << "\n";
+                    cout << "\\/\\/\\/\\/\\/\\/\\/\\/" << "\n";
+                    cout << "/\\/\\/\\/\\/\\/\\/\\/\\" << "\n";
+                    cout << "\\/\\/\\/\\/\\/\\/\\/\\/" << "\n";
+                    cout << "/\\/\\/\\/\\/\\/\\/\\/\\" << "\n";
+                    cout << "\\/\\/\\/\\/\\/\\/\\/\\/" << "\n";
+                    cout << "/\\/\\/\\/\\/\\/\\/\\/\\" << "\n";
+                    cout << "\\/\\/\\/\\/\\/\\/\\/\\/" << "\n";
+                    cout << "\nSuccessfully displayed pattern " << userInput << "!";
+                    break;
+                }
+                else if (userInput == "2") {
+                    cout << "_-_-_-_-_-_-_-_-" << "\n";
+                    cout << "-_-_-_-_-_-_-_-_" << "\n";
+                    cout << "_-_-_-_-_-_-_-_-" << "\n";
+                    cout << "-_-_-_-_-_-_-_-_" << "\n";
+                    cout << "_-_-_-_-_-_-_-_-" << "\n";
+                    cout << "-_-_-_-_-_-_-_-_" << "\n";
+                    cout << "_-_-_-_-_-_-_-_-" << "\n";
+                    cout << "-_-_-_-_-_-_-_-_" << "\n";
+                    cout << "_-_-_-_-_-_-_-_-" << "\n";
+                    cout << "-_-_-_-_-_-_-_-_" << "\n";
+                    cout << "_-_-_-_-_-_-_-_-" << "\n";
+                    cout << "-_-_-_-_-_-_-_-_" << "\n";
+                    cout << "_-_-_-_-_-_-_-_-" << "\n";
+                    cout << "\nSuccessfully displayed pattern " << userInput << "!";
+                    break;
+                }
+                else {
+                    cout << "You selected pattern " << userInput << " but that isn't a valid pattern!\nPlease select a valid one...\n"; // This happens if you don't enter a correct pattern ID
+                }
+            }
+        }
         else if (userInput == "window") {
             if (osName == "Windows32" || osName == "Windows64") {
                 system("resrouces/window.vbs")
