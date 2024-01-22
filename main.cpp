@@ -19,28 +19,14 @@ int delay(int milliseconds) { // This is used to delay the execution of the code
     return 0;
 }
 
-std::fstream& GotoLine(std::fstream& file, unsigned int num) {
-    file.seekg(std::ios::beg);
-    for (int i = 0; i < num - 1; ++i) {
-        file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-    return file;
-}
-
-string getOsName() // This is used to get the name (or ID) of the current operating system
-{
-#ifdef _WIN32    // If the windows os is running a 32-bit os
-    return "Windows 32-bit";
-#elif _WIN64     // If the windows os is running a 64-bit os
-    return "Windows 64-bit";
-#endif
-}
-
 int main() {
     auto start = std::chrono::system_clock::now(); // The variable that tracks the start time of the application
     string userInput;                              // The variable responsible for user input
     string timesLaunched;
     string coolpageMainSite = "https://hightide.coolpage.biz/home.html";
+
+    string applicationVersion = "0.5";
+    string cppVersion = "17";
 
     cout << "Loading...\n";
     system("title HighTideGA");
@@ -95,8 +81,8 @@ int main() {
                  << "exit/quit          Closes the application\n";
         }
         else if (userInput == "version") {
-            cout << "Application Version: 0.5.0\n"
-                 << "Current Language Version: cpp17\n";
+            cout << "Application Version: " << applicationVersion << "\n"
+                 << "Current Language Version: " << cppVersion << "\n";
         }
         else if (userInput == "stats") {
             cout << "Here is a list of statistics for this program:\n"
@@ -107,17 +93,17 @@ int main() {
         }
         else if (userInput == "coolpage") {
             cout << "Are you sure you want to open the HighTide Coolpage in a new internet tab? (Y/N)\nAnswer: ";
-            while (true) {
-                getline(cin, userInput);
+            while (true) { // Command loop
+                getline(cin, userInput); // Get the Y or N answer
                 if (userInput == "Y" || userInput == "y") {
-                    string cmdToExecute = "start /max " + coolpageMainSite;
+                    string cmdToExecute = "start /max " + coolpageMainSite; // Generate the command to execute in batch
                     cout << "Opening new browser tab...\n";
-                    system(cmdToExecute.c_str());
-                    break;
+                    system(cmdToExecute.c_str()); // Execute the command in the cmdToExecute variable
+                    break; // Break out of the loop
                 }
                 else if (userInput == "N" || userInput == "n") {
                     cout << "Alright then\n";
-                    break;
+                    break; // Break out of the loop
                 }
                 else {
                     DisplayErrMsg(2);
@@ -132,19 +118,20 @@ int main() {
                 getline(cin, userInput);
                 if (userInput == "view") {
                     cout << "The current note includes: \n";
-                    ifstream noteFile("data/note.notedata");
+                    ifstream noteFile("data/note.notedata"); // Create a file object reference to the note file
                     string textFromNote;
-                    while (getline(noteFile, textFromNote)) { cout << textFromNote; }
+                    while (getline(noteFile, textFromNote)) { cout << textFromNote; } // Display all content of the note file line by line
                     cout << endl;
-                    noteFile.close();
+                    noteFile.close(); // Close the note file to prevent any errors
                     break;
                 }
                 else if (userInput == "save") {
                     cout << "Please enter the new content that the note will store:\nContent: ";
-                    getline(cin, userInput);
-                    ofstream noteFile("data/note.notedata");
-                    noteFile.clear();
-                    noteFile << userInput;
+                    getline(cin, userInput); // Get the user input and save it to the userInput variable
+                    ofstream noteFile("data/note.notedata"); // Create a file object reference
+                    noteFile.clear(); // Clear the note file to make space for the new text
+                    noteFile << userInput; // Write the user input to the note file
+                    noteFile.close(); // Close the note file to prevent any errors
                     cout << "Successfully saved a note!\n";
                     break;
                 }
@@ -157,34 +144,51 @@ int main() {
             cout << "What level do you want to view? (1, 2, 3, 4, etc.)\n";
             while (true) {
                 getline(cin, userInput);
-                ifstream lvlFile("program/gd/lvl" + userInput + ".gdlvl");
-                if (lvlFile) {
+                ifstream lvlFile("program/gd/lvl" + userInput + ".gdlvl"); // Create a new file object reference
+                if (lvlFile) { // Check if the file successfully opened as a reference
                     string lvlFileText;
                     cout << "Level Data for TheHighTide:\n--------------------------\n";
-                    while (getline(lvlFile, lvlFileText)) { cout << lvlFileText << endl; }
-                    lvlFile.close();
+                    while (getline(lvlFile, lvlFileText)) { cout << lvlFileText << endl; } // Display the contents of the file line by line
+                    lvlFile.close(); // Close the file to prevent any more errors
                     break;
                 }
                 else {
-                    lvlFile.close();
-                    DisplayErrMsg(3);
+                    lvlFile.close(); // Close the file to prevent any errors
+                    DisplayErrMsg(3); // Display the level nonexistant error
                 }
             }
         }
         else if (userInput == "clearscreen") {
-            system("cls");
-            cout << "Successfully cleared the screen...\n";
+            system("cls"); // Execute the batch command to clear the screen
+            cout << "Successfully cleared the screen...\n"; // Display this message if the command was successfull
         }
         else if (userInput == "dice") {
-            int random = randInt(1, 6); // Generate a random number between 1 and 6
-            if (random == 1) { // Output generated number (lowest)
-                cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m (The lowest possible number)\n";
-            }
-            else if (random == 6) { // Output generated number (highest)
-                cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m (The highest possible number)\n";
-            }
-            else { // Output generated number
-                cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+            cout << "How many sides does the dice you want to doll have? 2, 6, 12, 24\n";
+            while (true) {
+                getline(cin, userInput);
+                if (userInput == "2") {
+                    int random = randInt(1, 2); // Generate a random number between 1 and 2
+                    cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+                    break;
+                }
+                else if (userInput == "6") {
+                    int random = randInt(1, 6); // Generate a random number between 1 and 6
+                    cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+                    break;
+                }
+                else if (userInput == "12") {
+                    int random = randInt(1, 12); // Generate a random number between 1 and 12
+                    cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+                    break;
+                }
+                else if (userInput == "24") {
+                    int random = randInt(1, 24); // Generate a random number between 1 and 24
+                    cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+                    break;
+                }
+                else {
+                    DisplayErrMsg(2);
+                }
             }
         }
         else if (userInput == "exit" || userInput == "quit" || userInput == "exit/quit") {
@@ -196,7 +200,7 @@ int main() {
             break; // Closes the current application
         }
         else if (userInput == "rainbow") {
-            DisplayArt("rainbow");
+            DisplayArt("rainbow"); // Get the art and display it
         }
         else {
             DisplayErrMsg(1); // Display the invalid command error message
