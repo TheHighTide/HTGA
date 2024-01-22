@@ -21,9 +21,8 @@ Sadly, I am working on this project alone as I need to make this perfect to matc
 If you don't already know, this application is a command-line based app which means you have to enter all of the commands by hand as apose to the GUI based apps windows/some linux has. 
 Some of the commands are: 
 1. `help`
-2. `credits`
-3. `exit`
-4. `quit`
+2. `version`
+3. `exit xor quit`
 
 You can check out a more indepth command list [here in the wiki](https://github.com/TheHighTide/HTGA/wiki/Commands).
 
