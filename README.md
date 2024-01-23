@@ -10,11 +10,16 @@ This app has a new wiki! The wiki is where you can go to to find anything you ne
 ## Major Update
 Currently there is a goal of mine to learn c++ and or c. To start that goal easier, I will be writing **HTGA** in *c++* so that I can learn while making a helpful app. Due to this sudden switch, there will be another delay added to the count because of the time it is taking to finish the build script. I can't currently decide whether to do it in makefile or cmake. Please bare with me and check out the current c++ build in the project releases.
 
+The most recent major update that this program recieved was responsible for the **removal of the linux and mac** support for the program. This was because when I ported the program to _Visual Studio 2022_ from _Visual Studio Code_, it caused the possibility of a port to be impossible. Although, the program is still written in **c++** making it possible for a third-party to port the program to other os's for themselves. Right now though, my main concern is keeping the program up and running for Windows making it run smooth and have up to date features that the community enjoys. 
+
 ## Development
 Right now the program is being developed at a steady pace. Judging by the current pace, version 1.0 will release in about 1-2 months. Currently development is easier because of GitHub's **codespace** feature. What the codespace feature does is it creates a virtual machine in the browser or GitHub app that allows me to edit source code directly on GitHub. That feature alone helps me develop the app/program much much faster!
 
 ## The Team
 Sadly, I am working on this project alone as I need to make this perfect to match my needs and your needs. The HighTideTeam is not all working on this project at the same time to make it easier to make!
+
+## Issue Tracking
+At the moment, I am working on getting the **issue tracker** that is built-in to GitHub working with this repository. I think with this feature, me and anyone else whom may help me in future development will have a great view on all the issues that arrise in this repository or entire program for that matter. At the moment, I am relying on the **projects tab** in this repository making this a huge step in the right direction for me and everyone else. If you are wondering, **the projects tab** is hidden to the public making it invisible to anyone who isn't a part of the projects development team.
 
 # App Help
 ## Commands:
