@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <fstream>
 #include <ctime>
@@ -10,6 +12,8 @@
 #include "errormsg.h"        // This is required for displaying error messages
 #include "artviewer.h"       // This is for viewing art in the console
 #include "randomize.h"       // This is for random number or word generation
+#include "logger.h"          // This is required if you plan on logging to the log file
+#include "adminmode.h"       // This is required for everything in the app!
 
 using namespace std;
 
@@ -25,14 +29,12 @@ int main() {
     string timesLaunched;
     string coolpageMainSite = "https://hightide.coolpage.biz/home.html";
 
-    string applicationVersion = "0.5";
-    string cppVersion = "17";
-
     cout << "Loading...\n";
     system("title HighTideGA");
     LoadFileToData("data/timeslaunched.userdata", false, "0", false);
     LoadFileToData("data/note.notedata", false, "This note hasn't been changed...", false);
     delay(1000 * 5);
+    Log("Finished loading app", false);
     IncrementStatistic("data/timeslaunched.userdata", 1);
     ifstream tlFile("data/timeslaunched.userdata");
     getline(tlFile, timesLaunched); // Gets the amount of times the user launched the program
@@ -70,6 +72,7 @@ int main() {
         cout << "HTGA: ";
         getline(cin, userInput); // The input required to get the inputted command
         if (userInput == "help") { // The command responsible for displaying all the commands
+            Log("Attempting to display all commands", false);
             cout << "Here is a list of available commands:\n"
                  << "help               lists all available commands\n"
                  << "version            Displays the version of the HTGA\n"
@@ -78,11 +81,13 @@ int main() {
                  << "clearscreen        Clears the console screen. Good if it gets cluttered\n"
                  << "gdmainlvl          View HighTide's progress in the main GD levels\n"
                  << "dice               Roll a 6 sided die\n"
-                 << "exit/quit          Closes the application\n";
+                 << "exit/quit          Closes the application\n"
+                 << "logo               Display HighTide's logo\n";
+            Log("Displayed all commands via help command", false);
         }
         else if (userInput == "version") {
-            cout << "Application Version: " << applicationVersion << "\n"
-                 << "Current Language Version: " << cppVersion << "\n";
+            cout << "Application Version: 0.5.0\n"
+                 << "Current Language Version: cpp17\n";
         }
         else if (userInput == "stats") {
             cout << "Here is a list of statistics for this program:\n"
@@ -93,17 +98,20 @@ int main() {
         }
         else if (userInput == "coolpage") {
             cout << "Are you sure you want to open the HighTide Coolpage in a new internet tab? (Y/N)\nAnswer: ";
-            while (true) { // Command loop
-                getline(cin, userInput); // Get the Y or N answer
+            while (true) {
+                getline(cin, userInput);
                 if (userInput == "Y" || userInput == "y") {
-                    string cmdToExecute = "start /max " + coolpageMainSite; // Generate the command to execute in batch
+                    Log("Trying to open a link.", false);
+                    string cmdToExecute = "start /max " + coolpageMainSite;
                     cout << "Opening new browser tab...\n";
-                    system(cmdToExecute.c_str()); // Execute the command in the cmdToExecute variable
-                    break; // Break out of the loop
+                    system(cmdToExecute.c_str());
+                    Log("Opened a link in a new browser tab", false);
+                    break;
                 }
                 else if (userInput == "N" || userInput == "n") {
                     cout << "Alright then\n";
-                    break; // Break out of the loop
+                    Log("User denied the webpage from opening", false);
+                    break;
                 }
                 else {
                     DisplayErrMsg(2);
@@ -118,20 +126,19 @@ int main() {
                 getline(cin, userInput);
                 if (userInput == "view") {
                     cout << "The current note includes: \n";
-                    ifstream noteFile("data/note.notedata"); // Create a file object reference to the note file
+                    ifstream noteFile("data/note.notedata");
                     string textFromNote;
-                    while (getline(noteFile, textFromNote)) { cout << textFromNote; } // Display all content of the note file line by line
+                    while (getline(noteFile, textFromNote)) { cout << textFromNote; }
                     cout << endl;
-                    noteFile.close(); // Close the note file to prevent any errors
+                    noteFile.close();
                     break;
                 }
                 else if (userInput == "save") {
                     cout << "Please enter the new content that the note will store:\nContent: ";
-                    getline(cin, userInput); // Get the user input and save it to the userInput variable
-                    ofstream noteFile("data/note.notedata"); // Create a file object reference
-                    noteFile.clear(); // Clear the note file to make space for the new text
-                    noteFile << userInput; // Write the user input to the note file
-                    noteFile.close(); // Close the note file to prevent any errors
+                    getline(cin, userInput);
+                    ofstream noteFile("data/note.notedata");
+                    noteFile.clear();
+                    noteFile << userInput;
                     cout << "Successfully saved a note!\n";
                     break;
                 }
@@ -142,54 +149,102 @@ int main() {
         }
         else if (userInput == "gdmainlvl") {
             cout << "What level do you want to view? (1, 2, 3, 4, etc.)\n";
+            Log("Starting gdmainlvl command loop", false);
             while (true) {
                 getline(cin, userInput);
-                ifstream lvlFile("program/gd/lvl" + userInput + ".gdlvl"); // Create a new file object reference
-                if (lvlFile) { // Check if the file successfully opened as a reference
+                ifstream lvlFile("program/gd/lvl" + userInput + ".gdlvl");
+                if (lvlFile) {
+                    Log("Level file was valid getting level info...", false);
                     string lvlFileText;
                     cout << "Level Data for TheHighTide:\n--------------------------\n";
-                    while (getline(lvlFile, lvlFileText)) { cout << lvlFileText << endl; } // Display the contents of the file line by line
-                    lvlFile.close(); // Close the file to prevent any more errors
+                    Log("Retrieved level info. Now printing it", false);
+                    while (getline(lvlFile, lvlFileText)) { cout << lvlFileText << endl; }
+                    lvlFile.close();
                     break;
                 }
                 else {
-                    lvlFile.close(); // Close the file to prevent any errors
-                    DisplayErrMsg(3); // Display the level nonexistant error
+                    Log("An error occured while trying to read the level file", false);
+                    lvlFile.close();
+                    DisplayErrMsg(3);
                 }
             }
         }
         else if (userInput == "clearscreen") {
-            system("cls"); // Execute the batch command to clear the screen
-            cout << "Successfully cleared the screen...\n"; // Display this message if the command was successfull
+            system("cls");
+            Log("User cleared the screen", false);
+            cout << "Successfully cleared the screen...\n";
         }
         else if (userInput == "dice") {
-            cout << "How many sides does the dice you want to doll have? 2, 6, 12, 24\n";
+            cout << "How many sides on the die? (2, 6, 12, or 24)\n";
+            Log("User called dice menu.", false);
             while (true) {
+                Log("Opened dice menu.", false);
                 getline(cin, userInput);
                 if (userInput == "2") {
-                    int random = randInt(1, 2); // Generate a random number between 1 and 2
-                    cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+                    cout << "Your die landed on: " << randInt(1, 2) << "\n";
+                    Log("User rolled a 2 sided dice", false); // Log to the log file to show it worked
                     break;
                 }
                 else if (userInput == "6") {
-                    int random = randInt(1, 6); // Generate a random number between 1 and 6
-                    cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+                    cout << "Your die landed on: " << randInt(1, 6) << "\n";
+                    Log("User rolled a 6 sided dice", false); // Log to the log file to show it worked
                     break;
                 }
                 else if (userInput == "12") {
-                    int random = randInt(1, 12); // Generate a random number between 1 and 12
-                    cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+                    cout << "Your die landed on: " << randInt(1, 12) << "\n";
+                    Log("User rolled a 12 sided dice", false); // Log to the log file to show it worked
                     break;
                 }
                 else if (userInput == "24") {
-                    int random = randInt(1, 24); // Generate a random number between 1 and 24
-                    cout << "The dice rolled: \x1b[1m" << random << "\x1b[0m\n";
+                    cout << "Your die landed on: " << randInt(1, 24) << "\n";
+                    Log("User rolled a 24 sided dice", false); // Log to the log file to show it worked
                     break;
                 }
                 else {
-                    DisplayErrMsg(2);
+                    Log("Failed to roll user's die", false); // Log to the log file to show it didn't work
+                    DisplayErrMsg(2); // Display this if the input isn't valid
                 }
             }
+        }
+        else if (userInput == "logo") {
+            Log("User called logo viewing", false);
+            DisplayArt("htlogo"); // Display HighTide's logo
+        }
+        else if (userInput == "adminmode") {
+            cout << "Checking your admin status...\n";
+            if (CheckForAdminRights(false)) { // Checks if admin rights were confirmed
+                cout << "Admin rights confirmed! Admin mode is activated!\n";
+                Log("Admin mode was activated.", false); // Logs the admin mode activation
+                SetAdminMode(true); // Finalizes the admin mode activation
+            }
+            else {
+                cout << "Admin rights unconfirmed! Admin mode denied!\n";
+                Log("Admin rights denied.", false);
+            }
+        }
+        else if (userInput == "printlogs" && IsAdminMode()) {
+            cout << "Warning, this can fill up the console really quickly. Are you sure you want this? (Y or n):\n";
+            cout << "Answer: ";
+            getline(cin, userInput);
+            if (userInput == "y" || userInput == "Y") {
+                Log("Admin called printlogs.", false);
+                ifstream logFile("htga.log", ios::in);
+                string logFileText;
+                while (getline(logFile, logFileText)) { cout << logFileText << endl; }
+                logFile.close();
+            }
+            else if (userInput == "n" || userInput == "n") {
+                Log("Admin denied printlogs.", false);
+                cout << "Alright! The logs will not be listed\n";
+            }
+            else {
+                cout << "That wasn't a valid response so it will be treated like an \"N\"\n";
+            }
+        }
+        else if (userInput == "clearlogfile" && IsAdminMode()) {
+            ofstream logFile("htga.log", ios::out);
+            logFile.clear();
+            logFile.close();
         }
         else if (userInput == "exit" || userInput == "quit" || userInput == "exit/quit") {
             if (userInput == "exit/quit") {
@@ -197,15 +252,17 @@ int main() {
                 getline(cin, userInput);
             }
             cout << "Closing the HTGA..." << endl;
+            Log("User called application exit", false);
             break; // Closes the current application
         }
         else if (userInput == "rainbow") {
-            DisplayArt("rainbow"); // Get the art and display it
+            DisplayArt("rainbow");
         }
         else {
             DisplayErrMsg(1); // Display the invalid command error message
         }
     }
     system("exit");
+    Log("Shutting down application.", false);
     return 0; // Keep this line or the program wont exit properly
 }
