@@ -36,6 +36,7 @@ int main() {
     delay(1000 * 5);
     Log("Finished loading app", false);
     IncrementStatistic("data/timeslaunched.userdata", 1);
+    Log("Changed statistic \"TimesLaunched\"", false); // Log this when the timesLaunched is changed with a mod of 1
     ifstream tlFile("data/timeslaunched.userdata");
     getline(tlFile, timesLaunched); // Gets the amount of times the user launched the program
     tlFile.close();
@@ -71,6 +72,7 @@ int main() {
     while (true) { // The main loop for the appliation
         cout << "HTGA: ";
         getline(cin, userInput); // The input required to get the inputted command
+        Log("User sent command: " + userInput, false); // Log the command that the user sent
         if (userInput == "help") { // The command responsible for displaying all the commands
             Log("Attempting to display all commands", false);
             cout << "Here is a list of available commands:\n"
@@ -82,12 +84,15 @@ int main() {
                  << "gdmainlvl          View HighTide's progress in the main GD levels\n"
                  << "dice               Roll a 6 sided die\n"
                  << "exit/quit          Closes the application\n"
-                 << "logo               Display HighTide's logo\n";
+                 << "logo               Display HighTide's logo\n"
+                 << "lettermess         Generates a custom amount of letters and prints them to the console\n"
+                 << "Admin Commands are hidden...\n";
             Log("Displayed all commands via help command", false);
         }
         else if (userInput == "version") {
-            cout << "Application Version: 0.5.0\n"
-                 << "Current Language Version: cpp17\n";
+            cout << "Current Language Version: cpp17\n"
+                 << "Application Version: 0.7.0\n"
+                 << "Changelog:\nNone...";
         }
         else if (userInput == "stats") {
             cout << "Here is a list of statistics for this program:\n"
@@ -148,35 +153,65 @@ int main() {
             }
         }
         else if (userInput == "gdmainlvl") {
-            cout << "What level do you want to view? (1, 2, 3, 4, etc.)\n";
+            cout << "What level type? (tower or classic)\n";
             Log("Starting gdmainlvl command loop", false);
             while (true) {
+                cout << "Answer: ";
                 getline(cin, userInput);
-                ifstream lvlFile("program/gd/lvl" + userInput + ".gdlvl");
-                if (lvlFile) {
-                    Log("Level file was valid getting level info...", false);
-                    string lvlFileText;
-                    cout << "Level Data for TheHighTide:\n--------------------------\n";
-                    Log("Retrieved level info. Now printing it", false);
-                    while (getline(lvlFile, lvlFileText)) { cout << lvlFileText << endl; }
-                    lvlFile.close();
-                    break;
+                if (userInput == "classic") {
+                    cout << "What is the ID of the level you want? (1, 2, 3, 4, ect.)\n";
+                    cout << "ID: ";
+                    getline(cin, userInput);
+                    ifstream lvlFile("program/gd/lvl" + userInput + ".gdlvl");
+                    if (lvlFile) {
+                        Log("Level file was valid getting level info...", false);
+                        string lvlFileText;
+                        cout << "Level Data for TheHighTide:\n--------------------------\n";
+                        Log("Retrieved level info. Now printing it", false);
+                        while (getline(lvlFile, lvlFileText)) { cout << lvlFileText << endl; }
+                        lvlFile.close();
+                        break;
+                    }
+                    else {
+                        Log("An error occured while trying to read the level file", false); // Log when file fails
+                        lvlFile.close(); // Close the file to prevent any errors
+                        DisplayErrMsg(3); // Display error when the file can't be displayed
+                    }
+                }
+                else if (userInput == "tower") {
+                    cout << "What is the ID of the level you want? (1, 2, 3, 4, ect.)\n";
+                    cout << "ID: ";
+                    getline(cin, userInput);
+                    ifstream lvlFile("program/gd/tlvl" + userInput + ".gdlvl");
+                    if (lvlFile) {
+                        Log("Level file was valid getting level info...", false);
+                        string lvlFileText;
+                        cout << "Level Data for TheHighTide:\n--------------------------\n";
+                        Log("Retrieved level info. Now printing it", false);
+                        while (getline(lvlFile, lvlFileText)) { cout << lvlFileText << endl; }
+                        lvlFile.close();
+                        break;
+                    }
+                    else {
+                        Log("An error occured while trying to read the level file", false); // Log when file fails
+                        lvlFile.close(); // Close the file to prevent any errors
+                        DisplayErrMsg(3); // Display error when the file can't be displayed
+                    }
                 }
                 else {
-                    Log("An error occured while trying to read the level file", false);
-                    lvlFile.close();
-                    DisplayErrMsg(3);
+                    Log("Invalid use of options", false);
+                    DisplayErrMsg(2);
                 }
             }
         }
-        else if (userInput == "clearscreen") {
-            system("cls");
-            Log("User cleared the screen", false);
+        else if (userInput == "clearscreen" || userInput == "cls" || userInput == "clearscr" || userInput == "clrscreen") {
+            system("cls"); // Execute the command that clears the screen
+            Log("User cleared the screen", false); // Log that the screen was cleared
             cout << "Successfully cleared the screen...\n";
         }
         else if (userInput == "dice") {
             cout << "How many sides on the die? (2, 6, 12, or 24)\n";
-            Log("User called dice menu.", false);
+            Log("User called dice menu.", false); // Log this when a user uses the dice command
             while (true) {
                 Log("Opened dice menu.", false);
                 getline(cin, userInput);
@@ -210,6 +245,29 @@ int main() {
             Log("User called logo viewing", false);
             DisplayArt("htlogo"); // Display HighTide's logo
         }
+        else if (userInput == "lettermess") {
+            cout << "Please enter the amount of letters you want to generate.\n";
+            int userTargetNumber;
+            while (true) {
+                cout << "Amount: ";
+                cin >> userTargetNumber;
+                if (cin.fail()) {
+                    Log("User entered an invalid number", false); // Log this if the input is an invalid integer
+                    cout << "Please enter a number not a letter or word!\n";
+                    getline(cin, userInput);
+                }
+                else {
+                    Log("User entered a valid number", false); // Log this if the input is a valid integer
+                    break;
+                }
+            }
+            for (int i = 0; i < userTargetNumber; i++) {
+                cout << randChar(); // Generate a random letter then print it
+            }
+            Log("User generated a total of " + to_string(userTargetNumber) + " letters", false); // Log this when finished generating the letters
+            cout << endl;
+            getline(cin, userInput);
+        }
         else if (userInput == "adminmode") {
             cout << "Checking your admin status...\n";
             if (CheckForAdminRights(false)) { // Checks if admin rights were confirmed
@@ -219,7 +277,7 @@ int main() {
             }
             else {
                 cout << "Admin rights unconfirmed! Admin mode denied!\n";
-                Log("Admin rights denied.", false);
+                Log("Admin rights denied.", false); // Log that the admin rights were denied
             }
         }
         else if (userInput == "printlogs" && IsAdminMode()) {
@@ -227,14 +285,14 @@ int main() {
             cout << "Answer: ";
             getline(cin, userInput);
             if (userInput == "y" || userInput == "Y") {
-                Log("Admin called printlogs.", false);
-                ifstream logFile("htga.log", ios::in);
+                Log("Admin called printlogs.", false); // Log the display thats about to happen
+                ifstream logFile("htga.log", ios::in); // Open the log file as an input file
                 string logFileText;
-                while (getline(logFile, logFileText)) { cout << logFileText << endl; }
-                logFile.close();
+                while (getline(logFile, logFileText)) { cout << logFileText << endl; } // Display the entire log file to console
+                logFile.close(); // Close the log file to prevent any errors
             }
-            else if (userInput == "n" || userInput == "n") {
-                Log("Admin denied printlogs.", false);
+            else if (userInput == "n" || userInput == "N") {
+                Log("Admin denied printlogs.", false); // Log to the log file that the user became an admin
                 cout << "Alright! The logs will not be listed\n";
             }
             else {
@@ -242,9 +300,9 @@ int main() {
             }
         }
         else if (userInput == "clearlogfile" && IsAdminMode()) {
-            ofstream logFile("htga.log", ios::out);
-            logFile.clear();
-            logFile.close();
+            ofstream logFile("htga.log", ios::out); // Open the log file as an output file
+            logFile.clear(); // Clear all the contents of the log file
+            logFile.close(); // Close the log file
         }
         else if (userInput == "exit" || userInput == "quit" || userInput == "exit/quit") {
             if (userInput == "exit/quit") {
@@ -259,6 +317,7 @@ int main() {
             DisplayArt("rainbow");
         }
         else {
+            Log("Sent command was invalid", false); // Log when command is invalid
             DisplayErrMsg(1); // Display the invalid command error message
         }
     }
