@@ -29,6 +29,9 @@ int main() {
     string timesLaunched;
     string coolpageMainSite = "https://hightide.coolpage.biz/home.html";
 
+    string applicationVersion = "0.8.0";    // The version string for HTGA
+    string cplusplusVersion = "cpp17";      // The version string for c++
+
     cout << "Loading...\n";
     system("title HighTideGA");
     LoadFileToData("data/timeslaunched.userdata", false, "0", false);
@@ -49,7 +52,7 @@ int main() {
     cout << "Press \"enter/return\" to continue..." << endl;
     getline(cin, userInput);
     system("cls");
-    ifstream file("data/username.userdata");
+    ifstream file("data/username.userdata"); // Creates a file reference to the username file
     if (file) {
         string fileText;
         cout << "Welcome back ";
@@ -86,12 +89,13 @@ int main() {
                  << "exit/quit          Closes the application\n"
                  << "logo               Display HighTide's logo\n"
                  << "lettermess         Generates a custom amount of letters and prints them to the console\n"
+                 << "reset              Resets the program back to default\n"
                  << "Admin Commands are hidden...\n";
             Log("Displayed all commands via help command", false);
         }
         else if (userInput == "version") {
             cout << "Current Language Version: cpp17\n"
-                 << "Application Version: 0.7.0\n"
+                 << "Application Version:" << applicationVersion << endl
                  << "Changelog:\nNone...";
         }
         else if (userInput == "stats") {
@@ -267,6 +271,23 @@ int main() {
             Log("User generated a total of " + to_string(userTargetNumber) + " letters", false); // Log this when finished generating the letters
             cout << endl;
             getline(cin, userInput);
+        }
+        else if (userInput == "reset") {
+            Log("User called application reset", false);
+            cout << "Are you sure you want to reset?\nType \"confirm reset\" to reset the program...\n";
+            getline(cin, userInput);
+            if (userInput == "confirm reset") {
+                cout << "Resetting the program...\n";
+                system("del data\\note.notedata data\\username.userdata htga.log"); // Executes the command to reset the program
+                cout << "The program has reset! Now exiting program...\n";
+                cout << "Press 'enter' to continue...\n";
+                getline(cin, userInput); // Wait for the user to press the enter key
+                exit(0);
+            }
+            else {
+                Log("User canceled the application reset\n", false); // Log this line when the user doesn't confirm the reset
+                cout << "Reset canceled\n"; // Also display this when the reset doesn't continue
+            }
         }
         else if (userInput == "adminmode") {
             cout << "Checking your admin status...\n";
