@@ -6,6 +6,7 @@
 #include <chrono>
 #include <limits>
 #include <string>
+#include <vector>
 
 #include "apploader.h"       // The most important header needed to load files that the program uses
 #include "statman.h"         // The main header for editing statistics
@@ -29,7 +30,7 @@ int main() {
     string timesLaunched;
     string coolpageMainSite = "https://hightide.coolpage.biz/home.html";
 
-    string applicationVersion = "0.8.0";    // The version string for HTGA
+    string applicationVersion = "0.9.0";    // The version string for HTGA
     string cplusplusVersion = "cpp17";      // The version string for c++
 
     cout << "Loading...\n";
@@ -89,6 +90,7 @@ int main() {
                  << "exit/quit          Closes the application\n"
                  << "logo               Display HighTide's logo\n"
                  << "lettermess         Generates a custom amount of letters and prints them to the console\n"
+                 << "gdprofile          Downloads a user profile from the Geometry Dash servers and displays their stats\n"
                  << "reset              Resets the program back to default\n"
                  << "Admin Commands are hidden...\n";
             Log("Displayed all commands via help command", false);
@@ -287,6 +289,42 @@ int main() {
             else {
                 Log("User canceled the application reset\n", false); // Log this line when the user doesn't confirm the reset
                 cout << "Reset canceled\n"; // Also display this when the reset doesn't continue
+            }
+        }
+        else if (userInput == "gdprofile") {
+            system("@echo off");
+            system("echo Downloading TheHighTide's user profile...");
+            Log("Now downloading geometrydash userdata", false);
+            system("curl https://hightide.coolpage.biz/htga.thehightide.gddata -o thehightide.txt -s");
+            Log("Finished downloading geometrydash userdata", false);
+            system("@echo on");
+            string line;
+            vector<string> lines;
+            ifstream inputStream("thehightide.txt");
+            while (getline(inputStream, line)) {
+                lines.push_back(line);
+            }
+            inputStream.close();
+
+            fstream outputStream("thehightide.txt", ios::out | ios::trunc);
+            if (outputStream.is_open())
+            {
+                for (int i = 0; i < lines.size() - 1; i++)
+                {
+                    outputStream << lines[i] << "\n";
+                }
+                outputStream.close();
+            }
+
+            ifstream gdUserFile("thehightide.txt", ios::in);
+            if (gdUserFile) {
+                string gdUserFileText;
+                while (getline(gdUserFile, gdUserFileText)) { cout << gdUserFileText << endl; }
+                gdUserFile.close(); // Close the user file
+                system("del thehightide.txt");
+            }
+            else {
+                cout << "That user profile wasn't downloaded properly!";
             }
         }
         else if (userInput == "adminmode") {
