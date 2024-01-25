@@ -15,6 +15,8 @@ The most recent major update that this program recieved was responsible for the 
 ## Development
 Right now the program is being developed at a steady pace. Judging by the current pace, version 1.0 will release in about 1-2 months. Currently development is easier because of GitHub's **codespace** feature. What the codespace feature does is it creates a virtual machine in the browser or GitHub app that allows me to edit source code directly on GitHub. That feature alone helps me develop the app/program much much faster!
 
+There are a bunch of messages in other commits expressing my goal to add **PHP support** to the HTGA. Even though that is listed as a goal, it will not be happening. I have found a new easier and quicker way to do the same thing by using the `curl` command in the windows **Command Prompt**. Not only is it much easier to imploment but it also greatly lowers the end file size greatly as uposed to adding an entire library to the source code. There are still a bunch of things I want to imploment but this by far is the coolest right now!
+
 ## The Team
 Sadly, I am working on this project alone as I need to make this perfect to match my needs and your needs. The HighTideTeam is not all working on this project at the same time to make it easier to make!
 
@@ -27,7 +29,7 @@ If you don't already know, this application is a command-line based app which me
 Some of the commands are: 
 1. `help`
 2. `version`
-3. `exit xor quit`
+3. `exit or quit`
 
 You can check out a more indepth command list [here in the wiki](https://github.com/TheHighTide/HTGA/wiki/Commands).
 
