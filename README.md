@@ -8,7 +8,7 @@ This is HighTide's official app!
 This app has a new wiki! The wiki is where you can go to to find anything you need to know about anything in this app. This wiki has every command and it's usage in order to make the use of this app very easy!
 
 ## Major Update
-Currently there is a goal of mine to learn c++ and or c. To start that goal easier, I will be writing **HTGA** in *c++* so that I can learn while making a helpful app. Due to this sudden switch, there will be another delay added to the count because of the time it is taking to finish the build script. I can't currently decide whether to do it in makefile or cmake. Please bare with me and check out the current c++ build in the project releases.
+Currently there is a goal of mine to learn C# and or F#. To start that goal easier, I will be writing **HTGA** in *C#* so that I can learn while making a helpful app. Due to this sudden switch, there will be another delay added to the count because of the time it is taking to finish the build script. I can't currently decide whether to do it in makefile or cmake. Please bare with me and check out the current C# build in the project releases.
 
 The most recent major update that this program recieved was responsible for the **removal of the linux and mac** support for the program. This was because when I ported the program to _Visual Studio 2022_ from _Visual Studio Code_, it caused the possibility of a port to be impossible. Although, the program is still written in **c++** making it possible for a third-party to port the program to other os's for themselves. Right now though, my main concern is keeping the program up and running for Windows making it run smooth and have up to date features that the community enjoys. 
 
